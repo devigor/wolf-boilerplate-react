@@ -1,14 +1,14 @@
-const { join } = require('path')
+const { resolve } = require('path')
+const Webpack = require('webpack')
 const HtmlPlugin = require('html-webpack-plugin')
 
 const webpackDevConfig = {
   entry: {
-    app: join(__dirname, 'src', 'index')
+    app: resolve(__dirname, '..', 'src', 'index')
   },
   output: {
-    path: join(__dirname, 'dist'),
-    filename: '[name].bundle.js',
-    publicPath: join(__dirname, 'dist')
+    filename: '[name].js',
+    publicPath: ''
   },
   module: {
     rules: [
@@ -28,10 +28,14 @@ const webpackDevConfig = {
       }
     ]
   },
+  resolve: {
+    extensions: ['.js', '.jsx']
+  },
   plugins: [
+    new Webpack.HotModuleReplacementPlugin(),
     new HtmlPlugin({
       title: 'Wolf Boilerplate React',
-      template: join(__dirname, 'src', 'html', 'index.html')
+      template: resolve(__dirname, '..', 'src', 'html', 'index.html')
     })
   ]
 }
